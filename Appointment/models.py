@@ -12,7 +12,7 @@ class Doctor(models.Model):
     department = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.email
+        return str(self.staffid)
 
 
 class Patient(models.Model):
@@ -23,17 +23,17 @@ class Patient(models.Model):
     idnumber = models.IntegerField()
 
     def __str__(self):
-        return self.firstname
+        return str(self.idnumber)
 
 
 class Appointments(models.Model):
-    fk_idnumber = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    fk_staffid = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    Patient_IDnumber = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    Doctor_Staffid = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     date = models.DateField()
     department = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.fk_staffid
+        return self.department
 
 
 class Departments(models.Model):
@@ -45,17 +45,18 @@ class Departments(models.Model):
 
 
 class Visits(models.Model):
-    fk_staffid = models.ForeignKey(Doctor, on_delete=models.CASCADE)
-    fk_idnumber = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    Doctor_staffid = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    Patient_idnumber = models.ForeignKey(Patient, on_delete=models.CASCADE)
     date = models.DateField()
     doctors_notes = models.TextField()
     triage_notes = models.TextField()
 
     def __str__(self):
-        return self.fk_staffid
+        return self.Doctor_staffid  # returns the doctor's staff id
 
 
 class Login(models.Model):
+
     email = models.EmailField(max_length=50)
     password = models.CharField(max_length=50)
 
